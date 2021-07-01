@@ -8,10 +8,23 @@ var app = require('../app');
 var debug = require('debug')('demo:server');
 var http = require('http');
 
+const socket= require('socket.io')
+
 /**
  * Get port from environment and store in Express.
  */
 
+ var server = http.createServer(app.callback());
+
+ const io = socket(server);
+ //监听socket连接
+ io.on('connection', client => {
+   console.log('用户已连接')
+   client.emit('serve', '我是从服务端来的数据')
+   client.on('client', (data) => {
+     console.log(data)
+   })
+ })
 var port = normalizePort(process.env.PORT || '3000');
 // app.set('port', port);
 
@@ -19,7 +32,6 @@ var port = normalizePort(process.env.PORT || '3000');
  * Create HTTP server.
  */
 
-var server = http.createServer(app.callback());
 
 /**
  * Listen on provided port, on all network interfaces.

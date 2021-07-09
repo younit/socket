@@ -1,8 +1,99 @@
 body {
-  padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
+* {
+  margin: 0;
+  padding: 0;
+}
+ul {
+ list-style: none;   
+}
+.content {
+  width: 375px;
+  height: 812px;
+  box-shadow: 0 0 0 2px rgba(0,0,0, 0.6);
+  transform: scale(0.7);
+  margin: 0 auto;
+  border-radius: 15px;
+  position: relative;
+}
+.toptar {
+  height: 60px;
+  background-color: #a03d2a;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+  text-align: center;
+  color: #fff;
+  line-height: 60px;
+  font-size: 16px;
+}
 
-a {
-  color: #00B7FF;
+
+.ctx {
+  height: 100vh;
+  background-color: #eee;
+  position: absolute;
+  width: 100%;
+  z-index: 1;
+}
+.ctx li:not(.toptar) {
+  line-height: 60px;
+  /* background-color: #fff; */
+  border-bottom: 1px solid #ccc;
+  font-size: 20px;
+  padding: 8px;
+}
+.ctx li:not(.toptar):hover{
+  background-color: #ccc;
+}
+.ftBox {
+  position: fixed;
+  height: 80px;
+  line-height: 80px;
+  width: 100%;
+  bottom: 0;
+  background-color: #ddd;
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
+  z-index: 2;
+}
+.text_right {
+  text-align: right;
+}
+.text_left {
+  text-align: left;
+}
+
+.msg {
+  padding: 10px;
+  border-radius: 5px;
+  font-size: 16px;
+}
+.username {
+  font-size: 14px;
+}
+.mgl5 {
+  margin-left: 5px;
+}
+.mgr5 {
+  margin-right: 5px;
+}
+.mglr5 {
+  margin: 0 5px;
+}
+.mbgd {
+  background-color: #32b464;
+}
+.mbgf {
+  background-color: #fff;
+}
+.minput {
+  width: 70%;
+  height: 40px;
+  margin-left: 10px;
+}
+.mbtn {
+  padding: 10px;
+  float: right;
+  margin: 19px 19px 0 0;
 }

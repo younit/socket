@@ -20,9 +20,13 @@ const socket= require('socket.io')
  //监听socket连接
  io.on('connection', client => {
    console.log('用户已连接')
+
+   //  传递给客户端的数据
    client.emit('serve', '我是从服务端来的数据')
+
+   //  接收客户端的数据
    client.on('client', (data) => {
-     console.log(data)
+     console.log('接收客户端的数据:', data)
    })
  })
 var port = normalizePort(process.env.PORT || '3000');

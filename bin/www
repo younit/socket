@@ -23,10 +23,12 @@ const socket= require('socket.io')
 
    //  传递给客户端的数据
    client.emit('serve', '我是从服务端来的数据')
+   client.broadcast.emit('serve', '我是从服务端来的数据')
 
    //  接收客户端的数据
    client.on('client', (data) => {
      console.log('接收客户端的数据:', data)
+     client.broadcast.emit('serve', data)
    })
  })
 var port = normalizePort(process.env.PORT || '3000');

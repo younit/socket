@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="stylesheets/style.css">
   <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
   <script src="https://lib.baomitu.com/socket.io/4.1.2/socket.io.js"></script>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 </head>
 <body>
  
@@ -21,17 +22,6 @@
 
 
 
-
-  var socket = io()  
-
-  //  将数据发送给服务端
-  // socket.emit('client', 'clientData')
-
-  //  接收服务端传递的数据
-  socket.on('serve', (msg) => {
-    console.log(msg)
-    // socket.emit('client', res)
-  })
 
   
  

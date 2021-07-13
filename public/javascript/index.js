@@ -3,30 +3,13 @@ new Vue({
   
   data () {
     return {
-      user: {
-        id: '1',
-        name: "帅气男孩"
-      },
-      regInfo: {
+      regInfo: { //  用户信息
         name: null,
-        pwd: null,
       },
-      users:[
-        // {
-        //   id: '1',
-        //   name: '帅气男孩',
-        //   msg: '你好, 我是帅气男孩',
-        //   sendTime: 1625819622257,
-        // },
-        // {
-        //   id: '2',
-        //   name: '美丽女孩',
-        //   msg: '你好, 我是美丽女孩',
-        //   sendTime: 1625819622257,
-        // },
+      users:[ //  成员列表
       ],
       val: '', //  输入框的值
-      talkRoom: false,
+      talkRoom: false, //  显示层级
     }
   },
   render (h) {
@@ -89,32 +72,6 @@ new Vue({
                     }
                   }, ),
                 ]),
-                // h('li', {}, [
-                //   h('span', {
-                //     style: {
-                //       width: '100px',
-                //       display: 'inline-block',
-                //     }
-                //   }, '密码'),
-                //   h('input', {
-                //     style: {
-                //       height: '30px',
-                //       textIndent: '10px',
-                //       fontSize: '18px'
-                //     },
-                //     domProps: {
-                //       value: self.value
-                //     },
-                //     on: {
-                //       input: e => this.regInfo.pwd = e.target.value,
-                //       keyup: e => {
-                //         if (e.keyCode === 13) {
-                //           console.log(111)
-                //         }
-                //       }
-                //     }
-                //   }, ),
-                // ]),
                 h('li', {}, [
                   h('button', {
                     style: {
@@ -166,6 +123,7 @@ new Vue({
               on: {
                 click: () => {
                   this.talkRoom = false
+                  this.regInfo.name = null
                 }
               }
             }, '<'),
@@ -184,7 +142,7 @@ new Vue({
               }
             },[
               this.users.map(item => {
-                if (item.name === this.user.name) {
+                if (item.name === this.regInfo.name) {
                   return h('li', {
                     class: {
                       text_right: true,
@@ -279,22 +237,26 @@ new Vue({
     }
   },
   methods: {
+    /**
+     * 事件--用户注册或者登录
+     */
     reg_login () {
       var self = this
       if (this.regInfo.name === null) {
         alert("昵称不能为空")
       } else {
+        //  请求后台数据
         axios.post('/users/login', {
           name: self.regInfo.name,
           pwd: self.regInfo.pwd
         })
         .then(function (response) {
+          //  获得后台查询结果
           let { code, msg, data } = response.data
           if (code === 200) {
             alert(msg)
             self.talkRoom = true
-            self.user = data[0]
-            console.log(self.user)
+            self.regInfo = data[0]
           }
           console.log(response);
         })
@@ -303,26 +265,34 @@ new Vue({
         })
       }
     },
+
+    /**
+     * 事件--客户端发送信息
+     */
     
     socketMsg (msg) {
-      var socket = io() 
-      let content = {
-        name: this.user.name,
-        msg: msg,
-        sendTime: new Date()
+      if (msg === null) {
+        alert('消息不能为空')
+      } else {
+        var socket = io() 
+        let content = {
+          name: this.regInfo.name,
+          msg: msg,
+          sendTime: new Date()
+        }
+        //  向服务端发送数据--content
+        socket.emit('client', content)
+        this.val = null
       }
-      socket.emit('client', content)
-      
-      
     },
   },
-  created() {
-    
-    //  将数据发送给服务端
-    // socket.emit('client', 'clientData')
-  },
+
+  /**
+   * 生命周期函数--页面渲染完成
+   */
   mounted() {
     var socket = io()
+    //  接收服务端发送过来的数据
     socket.on('serve', (content) => {
       console.log(content)
       this.users.push(content)

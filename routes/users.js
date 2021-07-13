@@ -11,7 +11,6 @@ router.post('/login', async (ctx, next) =>{ //  登录 注册接口
   console.log(ctx.request.body)
   let para = {
     'name': ctx.request.body.name,
-    'pwd': ctx.request.body.pwd,
   }
   //  查询是否存在角色名
   let res = await items.find(para)

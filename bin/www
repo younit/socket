@@ -17,27 +17,24 @@ const socket= require('socket.io')
  var server = http.createServer(app.callback());
 
  const io = socket(server);
+
  //监听socket连接
  io.on('connection', client => {
-   console.log('用户已连接')
 
-   //  传递给客户端的数据
-   client.emit('serve', '我是从服务端来的数据')
-   client.broadcast.emit('serve', '我是从服务端来的数据')
-
-   //  接收客户端的数据
+   //  接收客户端的数据--data
    client.on('client', (data) => {
      console.log('接收客户端的数据:', data)
+     //  向客户端发送数据--data
      client.broadcast.emit('serve', data)
    })
  })
+ 
 var port = normalizePort(process.env.PORT || '3000');
 // app.set('port', port);
 
 /**
  * Create HTTP server.
  */
-
 
 /**
  * Listen on provided port, on all network interfaces.

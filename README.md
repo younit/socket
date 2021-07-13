@@ -15,3 +15,36 @@
 ## 数据库
 
 #### `MongoDB`
+
+## 服务端socket实现代码
+
+```js
+const io = socket(server);
+
+ //监听socket连接
+ io.on('connection', client => {
+
+   //  接收客户端的数据--data
+   client.on('client', (data) => {
+     console.log('接收客户端的数据:', data)
+     //  向客户端发送数据--data
+     client.broadcast.emit('serve', data)
+   })
+ })
+```
+
+## 前端socket`部分`实现代码
+
+```js
+var socket = io() 
+//  向服务端发送数据--content
+socket.emit('client', content)
+
+//  接收服务端发送过来的数据
+socket.on('serve', (content) => {
+  console.log(content)
+  this.users.push(content)
+})
+
+```
+

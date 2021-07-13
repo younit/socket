@@ -274,12 +274,12 @@ new Vue({
       if (msg === null) {
         alert('消息不能为空')
       } else {
-        var socket = io() 
         let content = {
           name: this.regInfo.name,
           msg: msg,
           sendTime: new Date()
         }
+        var socket = io() 
         //  向服务端发送数据--content
         socket.emit('client', content)
         this.val = null

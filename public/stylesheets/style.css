@@ -88,7 +88,7 @@ ul {
   background-color: #fff;
 }
 .minput {
-  width: 70%;
+  width: 60%;
   height: 40px;
   margin-left: 10px;
 }
@@ -96,4 +96,8 @@ ul {
   padding: 10px;
   float: right;
   margin: 19px 19px 0 0;
+}
+.imgs {
+  width: 80px;
+  height: 80px;
 }

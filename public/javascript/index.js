@@ -143,31 +143,63 @@ new Vue({
             },[
               this.users.map(item => {
                 if (item.name === this.regInfo.name) {
-                  return h('li', {
-                    class: {
-                      text_right: true,
-                    }
-                  }, [
-                    h('span', {
+                  if(item.msg) {
+                    return h('li', {
                       class: {
-                        msg: true,
-                        mgr5: true,
-                        mbgd: true,
+                        text_right: true,
                       }
-                    }, item.msg),
-                    h('span', {
+                    }, [
+                      h('span', {
+                        class: {
+                          msg: true,
+                          mgr5: true,
+                          mbgd: true,
+                        }
+                      }, item.msg),
+                      h('span', {
+                        class: {
+                          mglr5: true,
+                        }
+                      }, ':'),
+                      h('span', {
+                        class: {
+                          username: true,
+                        }
+                      }, item.name)
+                    ])
+                  } else {
+                    return h('li', {
                       class: {
-                        mglr5: true,
+                        text_right: true,
                       }
-                    }, ':'),
-                    h('span', {
-                      class: {
-                        username: true,
-                      }
-                    }, item.name)
-                  ])
+                    }, [
+                      
+                      h('img', {
+                        attrs: {
+                          src: item.url + item.res.key
+                        },
+                        class: {
+                          imgs: true,
+                          mgl5: true,
+                          mbgf: true,
+                        }
+                      }),
+                      h('span', {
+                        class: {
+                          mglr5: true,
+                        }
+                      }, ':'),
+                      h('span', {
+                        class: {
+                          msg: true,
+                          mgr5: true,
+                          mbgd: true,
+                        }
+                      }, item.name),
+                    ])
+                  }
                 } else {
-                  if (item.name) {
+                  if (item.name && item.msg) {
                     return h('li', {
                       class: {
                         text_left: true,
@@ -190,6 +222,33 @@ new Vue({
                           mbgf: true,
                         }
                       }, item.msg),
+                    ])
+                  } else {
+                    return h('li', {
+                      class: {
+                        text_left: true,
+                      }
+                    }, [
+                      h('span', {
+                        class: {
+                          username: true,
+                        }
+                      }, item.name),
+                      h('span', {
+                        class: {
+                          mglr5: true,
+                        }
+                      }, ':'),
+                      h('img', {
+                        attrs: {
+                          src: item.url + item.res.key
+                        },
+                        class: {
+                          imgs: true,
+                          mgl5: true,
+                          mbgf: true,
+                        }
+                      }),
                     ])
                   }
                 }
@@ -221,6 +280,56 @@ new Vue({
                 }
               }
             }),
+            h('input', {
+              attrs: {
+                type: 'file'
+              },
+              style: {
+                display: 'none'
+              },
+
+              ref: 'upload',
+              on: {
+                change: (e) => {
+                  console.log(e.target.files)
+                  let file = e.target.files[0]
+                  e.target.value = null
+                  let reader = new FileReader()
+                  reader.readAsDataURL(file)
+                  reader.onloadend = function (res) {
+                    // console.log(res)
+                    // console.log(this.result)
+
+                    let content = {
+                      name: self.regInfo.name,
+                      img: this.result,
+                      sendTime: new Date()
+                    }
+                    var socket = io() 
+                    //  向服务端发送数据--content
+                    socket.emit('client', content)
+                  }
+                }
+              }
+            }, '上传'),
+            h('span', {
+              style: {
+                borderRadius: '50%',
+                'background-color': '#ccc',
+                color: '#fff',
+                padding: '10px 14px',
+                textAlign: 'center',
+                fontSize: '20px',
+                verticalAlign: 'middle',
+                marginLeft: '10px',
+              },
+              on: {
+                click: () => {
+                  this.$refs.upload.click()
+                },
+               
+              }
+            }, '+'),
             h('button', {
               class: {
                 mbtn: true
@@ -234,6 +343,18 @@ new Vue({
           ]),
         ])
       ])
+    }
+  },
+  created() {
+    let name = localStorage.getItem("name");
+
+    if (name) {
+      // userInfo = JSON.parse(userInfo)
+      console.log((name))
+      this.talkRoom = true
+      this.regInfo = {
+        name: name
+      }
     }
   },
   methods: {
@@ -255,6 +376,7 @@ new Vue({
           let { code, msg, data } = response.data
           if (code === 200) {
             alert(msg)
+            localStorage.setItem("name", data[0].name)
             self.talkRoom = true
             self.regInfo = data[0]
           }

@@ -7,8 +7,11 @@
 var app = require('../app');
 var debug = require('debug')('demo:server');
 var http = require('http');
+const fs = require('fs')
 
 const socket= require('socket.io')
+
+const qn = require('../public/javascript/qiniu')
 
 /**
  * Get port from environment and store in Express.
@@ -23,9 +26,37 @@ const socket= require('socket.io')
 
    //  接收客户端的数据--data
    client.on('client', (data) => {
-     console.log('接收客户端的数据:', data)
-     //  向客户端发送数据--data
-     client.broadcast.emit('serve', data)
+
+    //  console.log('接收客户端的数据:', data)
+    if (data.img) {
+      let img = data.img
+      let suffixName = img.match(/[^data:image\/]\w+[^;base]/)
+      let base = img.replace(/^data:image\/\w+;base64,/, "")
+      let dbuff = new Buffer.from(base, 'base64')
+      let temporaryImg = new Date().getTime() + '.' + suffixName
+      var p = function () {
+      return new Promise((resolve,reject) => {
+        fs.writeFile(temporaryImg, dbuff, function (err) {
+          if (err) {
+            reject(err)
+          } else {
+            resolve()
+          }
+        })
+      })
+    }
+      p()
+
+      qn.upImg(temporaryImg).then(res => {
+        console.log('返回结果',res)
+        data.res = res
+        data.url = 'http://mziu.club/'
+        client.broadcast.emit('serve', data)
+      })
+    } else {
+        //  向客户端发送数据--data
+      client.broadcast.emit('serve', data)
+    }
    })
  })
  

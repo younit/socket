@@ -174,16 +174,26 @@ new Vue({
                       }
                     }, [
                       
-                      h('img', {
-                        attrs: {
-                          src: item.url + item.res.key
-                        },
-                        class: {
-                          imgs: true,
-                          mgl5: true,
-                          mbgf: true,
+                      h('span', {
+                        style: {
+                          display: 'inline-block',
+                          minWidth: "50px",
+                          minHeight: "100px",
+                          maxWidth: "100px",
+                          maxHeight: "100px",
                         }
-                      }),
+                      }, [
+                        h('img', {
+                          attrs: {
+                            src: item.url + item.res.key
+                          },
+                          class: {
+                            imgs: true,
+                            mgl5: true,
+                            mbgf: true,
+                          }
+                        }),
+                      ]),
                       h('span', {
                         class: {
                           mglr5: true,
@@ -239,16 +249,26 @@ new Vue({
                           mglr5: true,
                         }
                       }, ':'),
-                      h('img', {
-                        attrs: {
-                          src: item.url + item.res.key
-                        },
-                        class: {
-                          imgs: true,
-                          mgl5: true,
-                          mbgf: true,
+                      h('span', {
+                        style: {
+                          display: 'inline-block',
+                          minWidth: "50px",
+                          minHeight: "100px",
+                          maxWidth: "100px",
+                          maxHeight: "100px",
                         }
-                      }),
+                      }, [
+                        h('img', {
+                          attrs: {
+                            src: item.url + item.res.key
+                          },
+                          class: {
+                            imgs: true,
+                            mgl5: true,
+                            mbgf: true,
+                          }
+                        }),
+                      ]),
                     ])
                   }
                 }

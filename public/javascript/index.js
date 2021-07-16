@@ -5,6 +5,7 @@ new Vue({
     return {
       regInfo: { //  用户信息
         name: null,
+        val: '',
       },
       users:[ //  成员列表
       ],
@@ -291,11 +292,12 @@ new Vue({
               },
               on: {
                 input: (event) => {
-                  this.val = event.target.value
+                  this.regInfo.val = event.target.value
                 },
                 keyup: e => {
                   if (e.keyCode === 13) {
-                    this.socketMsg(this.val)
+                    // e.target.value = null
+                    this.socketMsg(this.regInfo.val)
                   }
                 }
               }
@@ -356,7 +358,7 @@ new Vue({
               },
               on: {
                 click: () => {
-                  this.socketMsg(this.val)
+                  this.socketMsg(this.regInfo.val)
                 }
               }
             }, '发送')
@@ -424,7 +426,7 @@ new Vue({
         var socket = io() 
         //  向服务端发送数据--content
         socket.emit('client', content)
-        this.val = null
+        this.regInfo.val = null
       }
     },
   },

@@ -27,7 +27,6 @@ const qn = require('../public/javascript/qiniu')
    //  接收客户端的数据--data
    client.on('client', (data) => {
 
-    //  console.log('接收客户端的数据:', data)
     if (data.img) {
       let img = data.img
       let suffixName = img.match(/[^data:image\/]\w+[^;base]/)
@@ -54,7 +53,7 @@ const qn = require('../public/javascript/qiniu')
         client.broadcast.emit('serve', data)
       })
     } else {
-        //  向客户端发送数据--data
+      //  向客户端发送数据--data
       client.broadcast.emit('serve', data)
     }
    })

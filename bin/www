@@ -34,16 +34,16 @@ const qn = require('../public/javascript/qiniu')
       let dbuff = new Buffer.from(base, 'base64')
       let temporaryImg = new Date().getTime() + '.' + suffixName
       var p = function () {
-      return new Promise((resolve,reject) => {
-        fs.writeFile(temporaryImg, dbuff, function (err) {
-          if (err) {
-            reject(err)
-          } else {
-            resolve()
-          }
+        return new Promise((resolve,reject) => {
+          fs.writeFile(temporaryImg, dbuff, function (err) {
+            if (err) {
+              reject(err)
+            } else {
+              resolve()
+            }
+          })
         })
-      })
-    }
+      }
       p()
 
       qn.upImg(temporaryImg).then(res => {

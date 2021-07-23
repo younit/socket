@@ -13,6 +13,7 @@ new Vue({
       talkRoom: false, //  显示层级
     }
   },
+  
   render (h) {
     var self = this
     if (this.talkRoom === false) {
@@ -125,6 +126,7 @@ new Vue({
                 click: () => {
                   this.talkRoom = false
                   this.regInfo.name = null
+                  localStorage.removeItem("name")
                 }
               }
             }, '<'),
@@ -202,9 +204,7 @@ new Vue({
                       }, ':'),
                       h('span', {
                         class: {
-                          msg: true,
-                          mgr5: true,
-                          mbgd: true,
+                          username: true
                         }
                       }, item.name),
                     ])
@@ -319,7 +319,7 @@ new Vue({
                   let reader = new FileReader()
                   reader.readAsDataURL(file)
                   reader.onloadend = function (res) {
-                    // console.log(res)
+                    console.log(res)
                     // console.log(this.result)
 
                     let content = {
@@ -367,6 +367,7 @@ new Vue({
       ])
     }
   },
+
   created() {
     let name = localStorage.getItem("name");
 
@@ -379,6 +380,7 @@ new Vue({
       }
     }
   },
+
   methods: {
     /**
      * 事件--用户注册或者登录

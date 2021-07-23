@@ -68,9 +68,15 @@ ul {
   padding: 10px;
   border-radius: 5px;
   font-size: 16px;
+  display: inline-block;
+  max-width: 270px;
+  line-height: 2rem;
+  word-break: break-word;
+  text-align: left;
 }
 .username {
   font-size: 14px;
+  vertical-align: top;
 }
 .mgl5 {
   margin-left: 5px;
@@ -80,6 +86,7 @@ ul {
 }
 .mglr5 {
   margin: 0 5px;
+  vertical-align: top;
 }
 .mbgd {
   background-color: #32b464;
